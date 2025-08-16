@@ -1,46 +1,36 @@
 export const projectsData = [
   {
     id: 1,
-    title: "E-Commerce Platform",
+    title: "Zentra",
     description: "A full-stack e-commerce application built with Next.js, featuring user authentication, payment integration, and admin dashboard.",
-    technologies: ["Next.js", "React", "Node.js", "MongoDB", "Stripe"],
-    githubUrl: "https://github.com/aman-prasad1/ecommerce-platform",
-    liveUrl: "https://ecommerce-demo.vercel.app",
+    technologies: ["React", "Node.js", "MongoDB", "Razorpay"],
+    githubUrl: "https://github.com/aman-prasad1/zentra",
+    liveUrl: "https://zentra-commerce.vercel.app",
     image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop",
     status: "completed"
   },
   {
     id: 2,
-    title: "Task Management App",
-    description: "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
-    technologies: ["React", "TypeScript", "Socket.io", "Express", "PostgreSQL"],
-    githubUrl: "https://github.com/aman-prasad1/task-manager",
-    liveUrl: "https://task-manager-demo.netlify.app",
-    image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=300&fit=crop",
-    status: "completed"
+    title: "Chat-Mate",
+    description: "A real-time chat application built with React and Socket.io and featuring user authentication",
+    technologies: ["React", "Socket.io", "Express", "MongoDB"],
+    githubUrl: "https://github.com/aman-prasad1/Chat-Mate",
+    liveUrl: "/",
+    image: "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=400&h=300&fit=crop",
+    status: "in-progress"
   },
   {
     id: 3,
-    title: "Weather Dashboard",
-    description: "A responsive weather application with location-based forecasts, interactive maps, and weather alerts using OpenWeatherMap API.",
-    technologies: ["React", "CSS3", "Weather API", "Chart.js", "PWA"],
-    githubUrl: "https://github.com/aman-prasad1/weather-dashboard",
-    liveUrl: "https://weather-app-demo.surge.sh",
+    title: "Video-Compressor",
+    description: "A web application for compressing video file without loosing video quality.",
+    technologies: ["React", "CSS3", "FFmpeg", "Express", "MongoDB"],
+    githubUrl: "https://github.com/aman-prasad1/Video-Compressor",
+    liveUrl: "/",
     image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=400&h=300&fit=crop",
     status: "completed"
   },
   {
     id: 4,
-    title: "AI Chat Application",
-    description: "An AI-powered chat application with natural language processing, conversation history, and multiple AI model integration.",
-    technologies: ["Python", "FastAPI", "OpenAI API", "React", "WebSocket"],
-    githubUrl: "https://github.com/aman-prasad1/ai-chat-app",
-    liveUrl: null,
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=300&fit=crop",
-    status: "in-progress"
-  },
-  {
-    id: 5,
     title: "Portfolio Website",
     description: "This very portfolio website you're viewing, built with Next.js 15, featuring modern animations, responsive design, and CI/CD pipeline.",
     technologies: ["Next.js", "Tailwind CSS", "Framer Motion", "GitHub Actions"],
