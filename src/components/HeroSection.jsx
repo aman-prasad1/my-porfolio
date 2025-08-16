@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-export default function HeroSection({ onViewWork }) {
+export default function HeroSection({ onViewWork, onViewSkills, onContact }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [mounted, setMounted] = useState(false);
   
@@ -24,13 +24,13 @@ export default function HeroSection({ onViewWork }) {
     return () => clearInterval(interval);
   }, [mounted]);
 
-  const techStack = ['React', 'Next.js', 'Node.js', 'Python', 'TypeScript'];
+  const techStack = ['React', 'Next.js', 'Node.js', 'TypeScript', 'Python'];
 
   return (
     <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
       <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         {/* Profile Image Placeholder */}
-        <div className="mt-2 mb-8">
+        <div className="mb-8">
           <div className="w-32 h-32 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-4xl font-bold text-white shadow-2xl animate-pulse-slow">
             AP
           </div>
@@ -80,18 +80,28 @@ export default function HeroSection({ onViewWork }) {
               </svg>
             </span>
           </button>
-          <button className="px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 hover:border-white/50 transition-all duration-300 transform hover:scale-105">
+          <button 
+            onClick={onContact}
+            className="px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 hover:border-white/50 transition-all duration-300 transform hover:scale-105"
+          >
             Get In Touch
           </button>
         </div>
 
-        {/* Development Status */}
-        <div className="mt-12 animate-slide-up animation-delay-1000">
-          <div className="flex items-center justify-center gap-2 text-gray-500">
-            <div className="w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
-            <span className="text-sm">Portfolio Under Development</span>
-          </div>
-        </div>
+        {/* Secondary Navigation - More Prominent
+        <div className="flex flex-col sm:flex-row gap-4 mt-6 animate-slide-up animation-delay-900">
+          <button 
+            onClick={onViewSkills}
+            className="group px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-medium rounded-full hover:bg-white/20 hover:border-white/30 transition-all duration-300 transform hover:scale-105"
+          >
+            <span className="flex items-center gap-2">
+              View Skills
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </span>
+          </button>
+        </div> */}
       </div>
     </div>
   );
