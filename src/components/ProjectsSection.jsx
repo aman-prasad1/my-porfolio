@@ -3,7 +3,7 @@ import ProjectCard from './ProjectCard';
 export default function ProjectsSection({ onBackToTop, projects }) {
   return (
     <div id="projects-section" className="relative z-10 min-h-screen bg-black/20 backdrop-blur-sm">
-      <div className="container mx-auto px-4 py-20">
+      <div className="container mx-auto px-4 py-20 pt-32">
         <div className="text-center mb-16 animate-slide-up">
           <h2 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 mb-6">
             My Projects

@@ -2,12 +2,13 @@
 'use client';
 
 import { useState } from 'react';
-import { 
-  AnimatedBackground, 
-  HeroSection, 
-  ProjectsSection, 
-  ScrollIndicator 
-} from '@/components';
+import AnimatedBackground from '../components/AnimatedBackground';
+import HeroSection from '../components/HeroSection';
+import ProjectsSection from '../components/ProjectsSection';
+import SkillsSection from '../components/SkillsSection';
+import SocialSection from '../components/SocialSection';
+import ScrollIndicator from '../components/ScrollIndicator';
+import Navigation from '../components/Navigation';
 import { projectsData } from '@/data/projects';
 
 export default function Home() {
@@ -27,6 +28,26 @@ export default function Home() {
     }, 300);
   };
 
+  const handleScrollToSkills = () => {
+    const skillsSection = document.getElementById('skills-section');
+    if (skillsSection) {
+      skillsSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
+  const handleScrollToContact = () => {
+    const socialSection = document.getElementById('social-section');
+    if (socialSection) {
+      socialSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   const handleBackToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     // Hide projects after scroll completes
@@ -41,7 +62,11 @@ export default function Home() {
       
       {/* Hero Section - Full height with fixed dimensions */}
       <div className="h-screen relative overflow-hidden">
-        <HeroSection onViewWork={handleViewMyWork} />
+        <HeroSection 
+          onViewWork={handleViewMyWork}
+          onViewSkills={handleScrollToSkills}
+          onContact={handleScrollToContact}
+        />
         <ScrollIndicator showProjects={showProjects} />
       </div>
       
@@ -54,6 +79,16 @@ export default function Home() {
           />
         </div>
       )}
+      
+      {/* Skills Section - Always visible */}
+      <div className="overflow-x-hidden">
+        <SkillsSection />
+      </div>
+      
+      {/* Social/Connect Section - Always visible */}
+      <div className="overflow-x-hidden">
+        <SocialSection />
+      </div>
     </main>
   );
 }
