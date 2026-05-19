@@ -21,10 +21,36 @@ export default function HeroSection() {
 
   return (
     <section className="hero-container">
+      {/* Captain's Portrait — Replace /placeholder-captain.png with /profile.jpg */}
+      <div className="captain-portrait">
+        <div className="captain-portrait-frame">
+          <div className="captain-portrait-inner">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/placeholder-captain.png"
+              alt="Captain Aman Prasad"
+              onError={(e) => {
+                // Fallback to initials if image not found
+                e.target.style.display = 'none';
+                e.target.parentElement.innerHTML = '<span style="font-family: var(--font-display); font-size: 2.8rem; color: var(--ink-dark); display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">AP</span>';
+              }}
+            />
+          </div>
+        </div>
+        {/* Compass marks around portrait */}
+        <span className="portrait-compass-mark" style={{ top: '-14px', left: '50%', transform: 'translateX(-50%)' }}>N</span>
+        <span className="portrait-compass-mark" style={{ right: '-12px', top: '50%', transform: 'translateY(-50%)' }}>E</span>
+        <span className="portrait-compass-mark" style={{ bottom: '-14px', left: '50%', transform: 'translateX(-50%)' }}>S</span>
+        <span className="portrait-compass-mark" style={{ left: '-10px', top: '50%', transform: 'translateY(-50%)' }}>W</span>
+        {/* Wax seal badge */}
+        <div className="portrait-seal">☠️</div>
+      </div>
+
       {/* Animated Compass Rose — draws itself */}
       <div className="hero-compass" style={{
         opacity: loaded ? 1 : 0,
         transition: 'opacity 1s ease',
+        width: '120px', height: '120px', marginBottom: '1.5rem',
       }}>
         <svg viewBox="0 0 200 200" fill="none">
           {/* Outer rings — draw animation */}
