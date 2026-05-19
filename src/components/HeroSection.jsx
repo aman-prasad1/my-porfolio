@@ -2,107 +2,205 @@
 
 import { useState, useEffect } from 'react';
 
-export default function HeroSection({ onViewWork, onViewSkills, onContact }) {
+export default function HeroSection() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  
-  const roles = ['Full Stack Developer', 'Problem Solver', 'Tech Enthusiast'];
+
+  const roles = ['Backend Navigator', 'Code Cartographer', 'System Architect'];
   const [currentRole, setCurrentRole] = useState(0);
 
   useEffect(() => {
-    setMounted(true);
     const timer = setTimeout(() => setIsLoaded(true), 300);
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
-    
     const interval = setInterval(() => {
       setCurrentRole((prev) => (prev + 1) % roles.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, [mounted]);
+  }, []);
 
-  const techStack = ['React', 'Next.js', 'Node.js', 'TypeScript', 'Python'];
+  const weapons = [
+    'Node.js', 'TypeScript', 'PostgreSQL', 'Redis', 'Kafka', 'Docker', 'AWS', 'React'
+  ];
 
   return (
-    <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
-      <div className={`transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        {/* Profile Image Placeholder */}
-        <div className="mb-8">
-          <div className="w-32 h-32 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-4xl font-bold text-white shadow-2xl animate-pulse-slow">
-            AP
-          </div>
-        </div>
-
-        {/* Greeting */}
-        <div className="text-center mb-8">
-          <h1 className="text-6xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 animate-gradient-x mb-4">
-            Hi, I'm Aman
-          </h1>
-          <div className="h-16 mb-6 flex items-center justify-center">
-            <p className="text-2xl md:text-3xl text-gray-300 font-light animate-fade-in">
-              {roles[currentRole]}
-            </p>
-          </div>
-        </div>
-
-        {/* Description */}
-        <div className="text-center mb-12 max-w-2xl">
-          <p className="text-lg md:text-xl text-gray-400 leading-relaxed mb-6 animate-slide-up animation-delay-500">
-            Passionate about creating beautiful, functional, and user-centered digital experiences.
-            Currently crafting amazing web applications with modern technologies.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
-            {techStack.map((tech, index) => (
-              <span
-                key={tech}
-                className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-gray-300 border border-white/20 hover:bg-white/20 transition-colors duration-300 animate-slide-up"
-                style={{ animationDelay: `${600 + index * 100}ms` }}
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 animate-slide-up animation-delay-800">
-          <button 
-            onClick={onViewWork}
-            className="group px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-full hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
+    <section style={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '6rem 2rem 4rem',
+      position: 'relative',
+      zIndex: 1,
+    }}>
+      {/* Compass Rose Avatar */}
+      <div
+        className={isLoaded ? 'animate-ink-bleed' : ''}
+        style={{
+          width: '120px',
+          height: '120px',
+          borderRadius: '50%',
+          border: '3px solid var(--ink-gold)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: '2rem',
+          position: 'relative',
+          background: 'radial-gradient(circle at 40% 40%, var(--parchment-light), var(--parchment-mid))',
+          boxShadow: '0 4px 20px rgba(44,24,16,0.15), inset 0 0 20px rgba(139,105,20,0.1)',
+          animationDelay: '0.1s',
+        }}
+      >
+        {/* Compass ring marks */}
+        {['N', 'E', 'S', 'W'].map((dir, i) => (
+          <span
+            key={dir}
+            style={{
+              position: 'absolute',
+              fontFamily: 'var(--font-heading)',
+              fontSize: '0.65rem',
+              color: 'var(--ink-gold)',
+              ...(i === 0 ? { top: '6px', left: '50%', transform: 'translateX(-50%)' } : {}),
+              ...(i === 1 ? { right: '6px', top: '50%', transform: 'translateY(-50%)' } : {}),
+              ...(i === 2 ? { bottom: '6px', left: '50%', transform: 'translateX(-50%)' } : {}),
+              ...(i === 3 ? { left: '8px', top: '50%', transform: 'translateY(-50%)' } : {}),
+            }}
           >
-            <span className="flex items-center gap-2">
-              View My Work
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </span>
-          </button>
-          <button 
-            onClick={onContact}
-            className="px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 hover:border-white/50 transition-all duration-300 transform hover:scale-105"
-          >
-            Get In Touch
-          </button>
-        </div>
-
-        {/* Secondary Navigation - More Prominent
-        <div className="flex flex-col sm:flex-row gap-4 mt-6 animate-slide-up animation-delay-900">
-          <button 
-            onClick={onViewSkills}
-            className="group px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-medium rounded-full hover:bg-white/20 hover:border-white/30 transition-all duration-300 transform hover:scale-105"
-          >
-            <span className="flex items-center gap-2">
-              View Skills
-              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </span>
-          </button>
-        </div> */}
+            {dir}
+          </span>
+        ))}
+        <span style={{
+          fontFamily: 'var(--font-display)',
+          fontSize: '2.2rem',
+          color: 'var(--ink-dark)',
+        }}>
+          AP
+        </span>
       </div>
-    </div>
+
+      {/* Title */}
+      <h1
+        className={isLoaded ? 'animate-ink-bleed' : ''}
+        style={{
+          fontFamily: 'var(--font-display)',
+          fontSize: 'clamp(2.5rem, 8vw, 4.5rem)',
+          color: 'var(--ink-dark)',
+          textAlign: 'center',
+          marginBottom: '0.5rem',
+          textShadow: '2px 2px 4px rgba(44,24,16,0.08)',
+          animationDelay: '0.3s',
+        }}
+      >
+        Captain Aman Prasad
+      </h1>
+
+      {/* Rotating Subtitle */}
+      <div style={{
+        height: '2.5rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: '1.5rem',
+      }}>
+        <p
+          key={currentRole}
+          className="animate-ink-bleed"
+          style={{
+            fontFamily: 'var(--font-body)',
+            fontStyle: 'italic',
+            fontSize: 'clamp(1.1rem, 3vw, 1.5rem)',
+            color: 'var(--ink-brown)',
+            animationDuration: '0.5s',
+          }}
+        >
+          ~ {roles[currentRole]} ~
+        </p>
+      </div>
+
+      {/* Description */}
+      <div
+        className={isLoaded ? 'animate-fade-in-up' : ''}
+        style={{
+          maxWidth: '650px',
+          textAlign: 'center',
+          marginBottom: '2.5rem',
+          animationDelay: '0.6s',
+        }}
+      >
+        <p style={{
+          fontSize: '1.1rem',
+          color: 'var(--ink-brown)',
+          lineHeight: 1.8,
+          marginBottom: '2rem',
+        }}>
+          Backend developer. B.Tech CSE, 2023–2027. Based in Kolkata.
+          I think about latency, fault tolerance, and data consistency
+          the way most people think about features. 1000+ algorithmic problems conquered.
+        </p>
+
+        {/* Tech Arsenal */}
+        <p style={{
+          fontFamily: 'var(--font-heading)',
+          fontSize: '0.9rem',
+          color: 'var(--ink-gold)',
+          marginBottom: '1rem',
+          letterSpacing: '2px',
+          textTransform: 'uppercase',
+        }}>
+          ⚔ Weapons in the Arsenal ⚔
+        </p>
+        <div style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          gap: '0.6rem',
+        }}>
+          {weapons.map((tech, i) => (
+            <span
+              key={tech}
+              className={`ink-stamp ${isLoaded ? 'animate-fade-in-up' : ''}`}
+              style={{
+                animationDelay: `${700 + i * 80}ms`,
+              }}
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* CTA Buttons */}
+      <div
+        className={isLoaded ? 'animate-fade-in-up' : ''}
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '1rem',
+          justifyContent: 'center',
+          animationDelay: '1.1s',
+        }}
+      >
+        <button
+          className="wax-btn"
+          onClick={() => {
+            const el = document.getElementById('voyages-section');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          <span>🗺️</span> Explore the Map
+        </button>
+        <button
+          className="wax-btn-outline"
+          onClick={() => {
+            const el = document.getElementById('contact-section');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          <span>📜</span> Send a Scroll
+        </button>
+      </div>
+    </section>
   );
 }
