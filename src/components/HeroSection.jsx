@@ -3,203 +3,157 @@
 import { useState, useEffect } from 'react';
 
 export default function HeroSection() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
+  const [loaded, setLoaded] = useState(false);
   const roles = ['Backend Navigator', 'Code Cartographer', 'System Architect'];
   const [currentRole, setCurrentRole] = useState(0);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 300);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setLoaded(true), 400);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentRole((prev) => (prev + 1) % roles.length);
-    }, 3000);
+    const interval = setInterval(() => setCurrentRole(p => (p + 1) % roles.length), 3000);
     return () => clearInterval(interval);
   }, []);
 
-  const weapons = [
-    'Node.js', 'TypeScript', 'PostgreSQL', 'Redis', 'Kafka', 'Docker', 'AWS', 'React'
-  ];
+  const weapons = ['Node.js', 'TypeScript', 'PostgreSQL', 'Redis', 'Kafka', 'Docker', 'AWS', 'React'];
 
   return (
-    <section style={{
-      minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '6rem 2rem 4rem',
-      position: 'relative',
-      zIndex: 1,
-    }}>
-      {/* Compass Rose Avatar */}
-      <div
-        className={isLoaded ? 'animate-ink-bleed' : ''}
-        style={{
-          width: '120px',
-          height: '120px',
-          borderRadius: '50%',
-          border: '3px solid var(--ink-gold)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: '2rem',
-          position: 'relative',
-          background: 'radial-gradient(circle at 40% 40%, var(--parchment-light), var(--parchment-mid))',
-          boxShadow: '0 4px 20px rgba(44,24,16,0.15), inset 0 0 20px rgba(139,105,20,0.1)',
-          animationDelay: '0.1s',
-        }}
-      >
-        {/* Compass ring marks */}
-        {['N', 'E', 'S', 'W'].map((dir, i) => (
-          <span
-            key={dir}
-            style={{
-              position: 'absolute',
-              fontFamily: 'var(--font-heading)',
-              fontSize: '0.65rem',
-              color: 'var(--ink-gold)',
-              ...(i === 0 ? { top: '6px', left: '50%', transform: 'translateX(-50%)' } : {}),
-              ...(i === 1 ? { right: '6px', top: '50%', transform: 'translateY(-50%)' } : {}),
-              ...(i === 2 ? { bottom: '6px', left: '50%', transform: 'translateX(-50%)' } : {}),
-              ...(i === 3 ? { left: '8px', top: '50%', transform: 'translateY(-50%)' } : {}),
-            }}
-          >
-            {dir}
-          </span>
-        ))}
-        <span style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: '2.2rem',
-          color: 'var(--ink-dark)',
-        }}>
-          AP
-        </span>
+    <section className="hero-container">
+      {/* Animated Compass Rose — draws itself */}
+      <div className="hero-compass" style={{
+        opacity: loaded ? 1 : 0,
+        transition: 'opacity 1s ease',
+      }}>
+        <svg viewBox="0 0 200 200" fill="none">
+          {/* Outer rings — draw animation */}
+          <circle className="compass-draw" cx="100" cy="100" r="92" stroke="#8b6914" strokeWidth="1.5" opacity="0.6" />
+          <circle className="compass-draw" cx="100" cy="100" r="85" stroke="#8b6914" strokeWidth="0.8" opacity="0.3" style={{ animationDelay: '0.3s' }} />
+          <circle className="compass-draw" cx="100" cy="100" r="78" stroke="#5c3a1e" strokeWidth="1" opacity="0.4" style={{ animationDelay: '0.6s' }} />
+
+          {/* Tick marks */}
+          {Array.from({ length: 36 }, (_, i) => i * 10).map((angle) => (
+            <line key={angle}
+              x1="100" y1={angle % 90 === 0 ? 12 : angle % 30 === 0 ? 16 : 20}
+              x2="100" y2={angle % 90 === 0 ? 26 : 24}
+              stroke="#5c3a1e"
+              strokeWidth={angle % 90 === 0 ? 2 : 0.8}
+              opacity={angle % 90 === 0 ? 0.8 : 0.3}
+              transform={`rotate(${angle} 100 100)`}
+            />
+          ))}
+
+          {/* Cardinal directions */}
+          {[
+            { d: 'N', a: 0, y: -62 },
+            { d: 'E', a: 90, y: -62 },
+            { d: 'S', a: 180, y: -62 },
+            { d: 'W', a: 270, y: -62 },
+          ].map(({ d, a, y }) => (
+            <text key={d} x="100" y="100" fill="#5c3a1e" fontSize="12"
+              fontFamily="MedievalSharp" textAnchor="middle" fontWeight="bold"
+              transform={`rotate(${a} 100 100) translate(0, ${y})`}>
+              {d}
+            </text>
+          ))}
+
+          {/* Compass star — main */}
+          <g className="compass-outer">
+            {/* Major points (N, E, S, W) */}
+            <polygon points="100,22 105,80 100,72 95,80" fill="#8b6914" opacity="0.9" />
+            <polygon points="100,178 105,120 100,128 95,120" fill="#c4a77d" opacity="0.7" />
+            <polygon points="22,100 80,95 72,100 80,105" fill="#c4a77d" opacity="0.7" />
+            <polygon points="178,100 120,95 128,100 120,105" fill="#c4a77d" opacity="0.7" />
+            {/* Minor points */}
+            <polygon points="42,42 88,88 82,84 84,82" fill="#d4a853" opacity="0.4" />
+            <polygon points="158,42 112,88 118,84 116,82" fill="#d4a853" opacity="0.4" />
+            <polygon points="42,158 88,112 82,116 84,118" fill="#d4a853" opacity="0.4" />
+            <polygon points="158,158 112,112 118,116 116,118" fill="#d4a853" opacity="0.4" />
+          </g>
+
+          {/* Needle — wobbles */}
+          <g className="compass-needle">
+            <polygon points="100,30 103,95 100,90 97,95" fill="#8b1a1a" opacity="0.85" />
+            <polygon points="100,170 103,105 100,110 97,105" fill="#2c1810" opacity="0.45" />
+          </g>
+
+          {/* Center */}
+          <circle cx="100" cy="100" r="6" fill="#5c3a1e" />
+          <circle cx="100" cy="100" r="3" fill="#8b6914" />
+        </svg>
       </div>
 
       {/* Title */}
-      <h1
-        className={isLoaded ? 'animate-ink-bleed' : ''}
-        style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(2.5rem, 8vw, 4.5rem)',
-          color: 'var(--ink-dark)',
-          textAlign: 'center',
-          marginBottom: '0.5rem',
-          textShadow: '2px 2px 4px rgba(44,24,16,0.08)',
-          animationDelay: '0.3s',
-        }}
-      >
-        Captain Aman Prasad
-      </h1>
+      <h1 className="hero-title">Aman Prasad</h1>
 
-      {/* Rotating Subtitle */}
-      <div style={{
-        height: '2.5rem',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: '1.5rem',
-      }}>
-        <p
-          key={currentRole}
-          className="animate-ink-bleed"
-          style={{
-            fontFamily: 'var(--font-body)',
-            fontStyle: 'italic',
-            fontSize: 'clamp(1.1rem, 3vw, 1.5rem)',
-            color: 'var(--ink-brown)',
-            animationDuration: '0.5s',
-          }}
-        >
+      {/* Rotating role */}
+      <div className="hero-subtitle-wrap">
+        <p key={currentRole} className="hero-subtitle">
           ~ {roles[currentRole]} ~
         </p>
       </div>
 
-      {/* Description */}
-      <div
-        className={isLoaded ? 'animate-fade-in-up' : ''}
-        style={{
-          maxWidth: '650px',
-          textAlign: 'center',
-          marginBottom: '2.5rem',
-          animationDelay: '0.6s',
-        }}
-      >
-        <p style={{
-          fontSize: '1.1rem',
-          color: 'var(--ink-brown)',
-          lineHeight: 1.8,
-          marginBottom: '2rem',
-        }}>
-          Backend developer. B.Tech CSE, 2023–2027. Based in Kolkata.
-          I think about latency, fault tolerance, and data consistency
-          the way most people think about features. 1000+ algorithmic problems conquered.
-        </p>
+      {/* Bio */}
+      <p className="hero-bio" style={{ marginBottom: '2rem' }}>
+        Backend developer forged in Kolkata. B.Tech CSE, 2023–2027.
+        I obsess over latency, fault tolerance, and data consistency.
+        1000+ algorithmic problems conquered across the digital seas.
+      </p>
 
-        {/* Tech Arsenal */}
+      {/* Weapons */}
+      <div style={{
+        textAlign: 'center', marginBottom: '2.5rem',
+        animation: 'ink-appear 1s ease-out 1.2s both',
+      }}>
         <p style={{
-          fontFamily: 'var(--font-heading)',
-          fontSize: '0.9rem',
-          color: 'var(--ink-gold)',
-          marginBottom: '1rem',
-          letterSpacing: '2px',
-          textTransform: 'uppercase',
+          fontFamily: 'var(--font-heading)', fontSize: '0.85rem',
+          color: 'var(--ink-gold)', marginBottom: '0.75rem',
+          letterSpacing: '2px', textTransform: 'uppercase',
         }}>
           ⚔ Weapons in the Arsenal ⚔
         </p>
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          gap: '0.6rem',
-        }}>
-          {weapons.map((tech, i) => (
-            <span
-              key={tech}
-              className={`ink-stamp ${isLoaded ? 'animate-fade-in-up' : ''}`}
-              style={{
-                animationDelay: `${700 + i * 80}ms`,
-              }}
-            >
-              {tech}
-            </span>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.5rem' }}>
+          {weapons.map((tech) => (
+            <span key={tech} className="ink-stamp">{tech}</span>
           ))}
         </div>
       </div>
 
-      {/* CTA Buttons */}
-      <div
-        className={isLoaded ? 'animate-fade-in-up' : ''}
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '1rem',
-          justifyContent: 'center',
-          animationDelay: '1.1s',
-        }}
-      >
-        <button
-          className="wax-btn"
-          onClick={() => {
-            const el = document.getElementById('voyages-section');
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-          }}
-        >
+      {/* CTA */}
+      <div style={{
+        display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center',
+        animation: 'ink-appear 1s ease-out 1.5s both',
+      }}>
+        <button className="wax-btn" onClick={() => {
+          document.getElementById('voyages-section')?.scrollIntoView({ behavior: 'smooth' });
+        }}>
           <span>🗺️</span> Explore the Map
         </button>
-        <button
-          className="wax-btn-outline"
-          onClick={() => {
-            const el = document.getElementById('contact-section');
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-          }}
-        >
+        <button className="wax-btn-outline" onClick={() => {
+          document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth' });
+        }}>
           <span>📜</span> Send a Scroll
         </button>
+      </div>
+
+      {/* Scroll hint */}
+      <div className="scroll-hint" style={{ marginTop: '3rem' }}>
+        <svg width="20" height="34" viewBox="0 0 20 34" style={{ opacity: 0.4 }}>
+          <rect x="4" y="1" width="12" height="20" rx="6" fill="none" stroke="var(--ink-gold)" strokeWidth="1.5" />
+          <circle cx="10" cy="8" r="1.5" fill="var(--ink-gold)">
+            <animate attributeName="cy" from="8" to="15" dur="1.5s" repeatCount="indefinite" />
+            <animate attributeName="opacity" from="1" to="0.2" dur="1.5s" repeatCount="indefinite" />
+          </circle>
+          <line x1="10" y1="24" x2="10" y2="32" stroke="var(--ink-gold)" strokeWidth="1.5" opacity="0.4" />
+          <polygon points="6,30 10,34 14,30" fill="var(--ink-gold)" opacity="0.4" />
+        </svg>
+        <span style={{
+          fontFamily: 'var(--font-body)', fontStyle: 'italic',
+          fontSize: '0.72rem', color: 'var(--ink-light)', opacity: 0.5,
+        }}>
+          scroll to explore the map
+        </span>
       </div>
     </section>
   );

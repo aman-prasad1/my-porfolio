@@ -1,193 +1,146 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
+
 export default function SocialSection() {
   const socialLinks = [
-    {
-      name: 'GitHub',
-      url: 'https://github.com/aman-prasad1',
-      icon: '⚓',
-      description: 'Code repositories & open source voyages',
-      sealColor: '#333',
-    },
-    {
-      name: 'LinkedIn',
-      url: 'https://linkedin.com/in/amanprasad1',
-      icon: '🔱',
-      description: 'Professional connections & career journey',
-      sealColor: '#0a66c2',
-    },
-    {
-      name: 'LeetCode',
-      url: 'https://leetcode.com/u/amanprasad1/',
-      icon: '⚔️',
-      description: '1000+ battles fought in the algorithmic arena',
-      sealColor: '#f89f1b',
-    },
-    {
-      name: 'Email',
-      url: 'mailto:amanprasad048@gmail.com',
-      icon: '📜',
-      description: 'Send a scroll for collaboration inquiries',
-      sealColor: '#c71610',
-    },
-    {
-      name: 'Instagram',
-      url: 'https://instagram.com/aman_prasad88',
-      icon: '🏴‍☠️',
-      description: 'Behind-the-scenes of a pirate\'s life',
-      sealColor: '#833ab4',
-    },
+    { name: 'GitHub', url: 'https://github.com/aman-prasad1', icon: '⚓', desc: 'Code repos & voyages', color: '#333' },
+    { name: 'LinkedIn', url: 'https://linkedin.com/in/amanprasad1', icon: '🔱', desc: 'Professional journey', color: '#0a66c2' },
+    { name: 'LeetCode', url: 'https://leetcode.com/u/amanprasad1/', icon: '⚔️', desc: '1000+ battles fought', color: '#f89f1b' },
+    { name: 'Email', url: 'mailto:amanprasad048@gmail.com', icon: '📜', desc: 'Send a scroll', color: '#c71610' },
+    { name: 'Instagram', url: 'https://instagram.com/aman_prasad88', icon: '🏴‍☠️', desc: "A pirate's life", color: '#833ab4' },
   ];
 
-  return (
-    <section id="contact-section" className="map-section" style={{ paddingTop: '4rem', paddingBottom: '2rem' }}>
-      <div className="compass-rose" />
-      <h2 className="section-title">Send a Message in a Bottle</h2>
-      <p className="section-subtitle">
-        Seeking a skilled backend navigator for your crew? Drop a message through any of these channels.
-      </p>
+  const cardsRef = useRef([]);
 
-      {/* Social Links */}
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('card-enter');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    cardsRef.current.forEach((el) => { if (el) observer.observe(el); });
+    return () => observer.disconnect();
+  }, []);
+
+  const rots = [1.5, -2, 1, -1.5, 2];
+
+  return (
+    <section id="contact-section" style={{
+      position: 'relative', zIndex: 1,
+      padding: '4rem 2rem 2rem', maxWidth: '1100px', margin: '0 auto',
+    }}>
+      <div className="ink-divider">
+        <span className="ink-divider-icon">📜</span>
+      </div>
+
+      <div className="section-header">
+        <h2 className="section-title">Message in a Bottle</h2>
+        <p className="section-subtitle">
+          Seeking a backend navigator? Drop a message through any channel on the seven seas.
+        </p>
+      </div>
+
+      {/* Social cards */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-        gap: '1.25rem',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+        gap: '2rem',
         marginBottom: '3rem',
       }}>
-        {socialLinks.map((social, i) => (
+        {socialLinks.map((s, i) => (
           <a
-            key={social.name}
-            href={social.url}
-            target={social.url.startsWith('mailto') ? '_self' : '_blank'}
+            key={s.name}
+            ref={(el) => { cardsRef.current[i] = el; }}
+            href={s.url}
+            target={s.url.startsWith('mailto') ? '_self' : '_blank'}
             rel="noopener noreferrer"
-            className="parchment-card animate-fade-in-up"
+            className={i % 2 === 0 ? 'torn-paper' : 'torn-paper-v2'}
             style={{
-              animationDelay: `${i * 120}ms`,
+              '--rot': `${rots[i]}deg`,
+              transform: `rotate(${rots[i]}deg)`,
+              opacity: 0,
+              animationDelay: `${i * 100}ms`,
               textDecoration: 'none',
               textAlign: 'center',
               cursor: 'pointer',
               padding: '1.5rem 1rem',
+              position: 'relative',
             }}
           >
-            {/* Wax seal icon */}
-            <div style={{
-              width: '56px',
-              height: '56px',
-              borderRadius: '50%',
-              background: `radial-gradient(circle at 35% 35%, ${social.sealColor}cc, ${social.sealColor})`,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 1rem',
-              fontSize: '1.5rem',
-              boxShadow: `0 3px 10px ${social.sealColor}40, inset 0 1px 2px rgba(255,255,255,0.2)`,
+            <div className="paper-pin" />
+
+            {/* Wax seal */}
+            <div className="wax-seal" style={{
+              background: `radial-gradient(circle at 35% 35%, ${s.color}cc, ${s.color})`,
+              margin: '0.3rem auto 0.75rem',
             }}>
-              {social.icon}
+              {s.icon}
             </div>
 
             <h3 style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: '1.15rem',
-              color: 'var(--ink-dark)',
-              marginBottom: '0.5rem',
-            }}>
-              {social.name}
-            </h3>
-
-            <p style={{
-              fontSize: '0.8rem',
-              color: 'var(--ink-light)',
-              lineHeight: 1.5,
-            }}>
-              {social.description}
+              fontFamily: 'var(--font-heading)', fontSize: '1.05rem',
+              color: 'var(--ink-dark)', marginBottom: '0.3rem',
+            }}>{s.name}</h3>
+            <p style={{ fontSize: '0.73rem', color: 'var(--ink-light)', lineHeight: 1.4 }}>
+              {s.desc}
             </p>
           </a>
         ))}
       </div>
 
-      {/* Crew Recruitment CTA */}
-      <div
-        className="parchment-card animate-fade-in-up"
-        style={{
-          maxWidth: '600px',
-          margin: '0 auto',
-          textAlign: 'center',
-          animationDelay: '700ms',
-          border: '2px solid var(--ink-gold)',
-        }}
-      >
+      {/* CTA */}
+      <div className="bounty-board" style={{ maxWidth: '550px', margin: '0 auto' }}>
         <h3 style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: '1.6rem',
-          color: 'var(--ink-dark)',
-          marginBottom: '0.75rem',
+          fontFamily: 'var(--font-display)', fontSize: '1.5rem',
+          color: 'var(--ink-dark)', marginBottom: '0.6rem',
         }}>
           ⚓ Crew Recruitment Open ⚓
         </h3>
         <p style={{
-          color: 'var(--ink-brown)',
-          marginBottom: '1.5rem',
-          lineHeight: 1.7,
+          color: 'var(--ink-brown)', marginBottom: '1.25rem', lineHeight: 1.6, fontSize: '0.95rem',
         }}>
           Open to backend & SDE internships — remote or Kolkata.
-          Whether you need a developer for your next expedition or want to discuss
-          technology, I&apos;d love to hear from you!
         </p>
-        <div style={{
-          display: 'flex',
-          gap: '1rem',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
-        }}>
-          <a href="mailto:amanprasad048@gmail.com" className="wax-btn">
+        <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <a href="mailto:amanprasad048@gmail.com" className="wax-btn" style={{ fontSize: '0.95rem' }}>
             📜 Send a Scroll
           </a>
-          <a
-            href="https://linkedin.com/in/amanprasad1"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="wax-btn-outline"
-          >
+          <a href="https://linkedin.com/in/amanprasad1" target="_blank" rel="noopener noreferrer"
+            className="wax-btn-outline" style={{ fontSize: '0.95rem' }}>
             🔱 View LinkedIn
           </a>
         </div>
       </div>
 
-      {/* Footer wave & credit */}
-      <div style={{
-        marginTop: '4rem',
-        textAlign: 'center',
-        position: 'relative',
-        paddingTop: '2rem',
-      }}>
-        {/* Wave SVG */}
+      {/* Footer */}
+      <div style={{ marginTop: '4rem', textAlign: 'center', position: 'relative', paddingTop: '2rem' }}>
+        {/* Animated wave */}
         <div style={{
-          position: 'absolute',
-          top: 0,
-          left: '-10%',
-          right: '-10%',
-          height: '30px',
-          overflow: 'hidden',
-          opacity: 0.15,
+          position: 'absolute', top: 0, left: '-10%', right: '-10%',
+          height: '25px', overflow: 'hidden', opacity: 0.12,
         }}>
-          <svg viewBox="0 0 1200 30" preserveAspectRatio="none" style={{ width: '200%', height: '100%', animation: 'wave 8s linear infinite' }}>
-            <path d="M0 15 Q 75 0, 150 15 Q 225 30, 300 15 Q 375 0, 450 15 Q 525 30, 600 15 Q 675 0, 750 15 Q 825 30, 900 15 Q 975 0, 1050 15 Q 1125 30, 1200 15" fill="none" stroke="var(--ink-brown)" strokeWidth="2"/>
+          <svg viewBox="0 0 1200 30" preserveAspectRatio="none" style={{
+            width: '200%', height: '100%',
+            animation: 'wave 10s linear infinite',
+          }}>
+            <path d="M0 15 Q 75 0, 150 15 Q 225 30, 300 15 Q 375 0, 450 15 Q 525 30, 600 15 Q 675 0, 750 15 Q 825 30, 900 15 Q 975 0, 1050 15 Q 1125 30, 1200 15"
+              fill="none" stroke="var(--ink-brown)" strokeWidth="2" />
           </svg>
         </div>
 
         <p style={{
-          fontFamily: 'var(--font-body)',
-          fontStyle: 'italic',
-          fontSize: '0.85rem',
-          color: 'var(--ink-light)',
+          fontFamily: 'var(--font-body)', fontStyle: 'italic',
+          fontSize: '0.82rem', color: 'var(--ink-light)',
         }}>
           &copy; {new Date().getFullYear()} Captain Aman Prasad &mdash; Charted with ☠️ from Kolkata
         </p>
         <p style={{
-          fontFamily: 'var(--font-body)',
-          fontSize: '0.75rem',
-          color: 'var(--parchment-dark)',
-          marginTop: '0.25rem',
+          fontFamily: 'var(--font-body)', fontSize: '0.72rem',
+          color: 'var(--parchment-dark)', marginTop: '0.25rem',
         }}>
           &ldquo;Not all treasure is silver and gold, mate.&rdquo;
         </p>
