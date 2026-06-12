@@ -1,21 +1,21 @@
 export const projectsData = [
   {
     id: 1,
-    title: "Zentra",
-    description: "Full-stack e-commerce platform with JWT auth, Razorpay payments, Redis caching & role-based access control.",
-    technologies: ["Node.js", "React", "MongoDB", "Redis", "Razorpay", "JWT"],
-    githubUrl: "https://github.com/aman-prasad1/zentra",
-    liveUrl: "",
+    title: "Event Chat",
+    description: "Microservice-based real-time chat platform with event-driven architecture. Uses Apache Kafka for async messaging, Redis for caching & sessions, PostgreSQL for persistence, and S3 for file storage. Deployed on AWS EC2.",
+    technologies: ["Express", "React", "Apache Kafka", "Redis", "PostgreSQL", "AWS EC2", "S3", "Docker"],
+    githubUrl: "https://github.com/aman-prasad1/event-chat",
+    liveUrl: "https://eventchat.amanprasad.xyz",
     status: "completed"
   },
   {
     id: 2,
-    title: "Chat-Mate",
-    description: "Real-time chat application with instant messaging, user authentication, and live presence indicators.",
-    technologies: ["React", "Socket.io", "Express", "MongoDB"],
-    githubUrl: "https://github.com/aman-prasad1/Chat-Mate",
-    liveUrl: "",
-    status: "in-progress"
+    title: "Zentra",
+    description: "Full-stack e-commerce platform with JWT auth, Razorpay payments, Redis caching & role-based access control.",
+    technologies: ["Node.js", "React", "MongoDB", "Redis", "Razorpay", "JWT"],
+    githubUrl: "https://github.com/aman-prasad1/zentra",
+    liveUrl: "https://zentra.amanprasad.xyz",
+    status: "completed"
   },
   {
     id: 3,

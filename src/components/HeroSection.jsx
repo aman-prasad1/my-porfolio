@@ -161,6 +161,14 @@ export default function HeroSection() {
         }}>
           <span>📜</span> Send a Scroll
         </button>
+        <a
+          href="/Resume.pdf"
+          download
+          className="wax-btn-outline resume-download-btn"
+          style={{ textDecoration: 'none' }}
+        >
+          <span>📥</span> Download the Chart
+        </a>
       </div>
 
       {/* Scroll hint */}

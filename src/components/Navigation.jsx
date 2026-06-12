@@ -111,6 +111,13 @@ export default function Navigation() {
               {item.label}
             </button>
           ))}
+          <a
+            href="/Aman_Prasad_Resume.pdf"
+            download
+            className="nav-resume-btn"
+          >
+            📥 Resume
+          </a>
         </div>
 
         {/* Mobile Hamburger */}
@@ -176,10 +183,40 @@ export default function Navigation() {
               {item.label}
             </button>
           ))}
+          <a
+            href="/Resume.pdf"
+            download
+            className="nav-resume-btn"
+            style={{ marginTop: '0.5rem' }}
+          >
+            📥 Download Resume
+          </a>
         </div>
       )}
 
       <style jsx>{`
+        .nav-resume-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          padding: 0.45rem 1.1rem;
+          font-family: var(--font-heading);
+          font-size: 0.88rem;
+          color: var(--parchment-light);
+          background: radial-gradient(circle at 30% 30%, #a03030, #6b2020 60%, #4a1010);
+          border: none;
+          border-radius: 50px;
+          cursor: pointer;
+          text-decoration: none;
+          box-shadow: 0 2px 8px rgba(107,32,32,0.35), inset 0 1px 2px rgba(255,255,255,0.15);
+          transition: all 0.3s ease;
+          white-space: nowrap;
+        }
+        .nav-resume-btn:hover {
+          transform: scale(1.06) translateY(-1px);
+          box-shadow: 0 4px 14px rgba(107,32,32,0.45), inset 0 1px 2px rgba(255,255,255,0.2);
+          color: #fff;
+        }
         @media (min-width: 769px) {
           .nav-mobile-btn { display: none !important; }
           .nav-desktop { display: flex !important; }
@@ -187,6 +224,12 @@ export default function Navigation() {
         @media (max-width: 768px) {
           .nav-mobile-btn { display: block !important; }
           .nav-desktop { display: none !important; }
+          .nav-resume-btn {
+            text-align: center;
+            justify-content: center;
+            padding: 0.65rem 1.5rem;
+            font-size: 1rem;
+          }
         }
       `}</style>
     </nav>
