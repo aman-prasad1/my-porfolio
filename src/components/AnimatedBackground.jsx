@@ -1,97 +1,198 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
+import * as THREE from 'three';
+
 export default function AnimatedBackground() {
-  return (
-    <>
-      <div className="parchment-bg" aria-hidden="true" />
+  const containerRef = useRef(null);
 
-      <div style={{
-        position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden',
-      }}>
-        {/* Large compass watermark */}
-        <svg viewBox="0 0 200 200" style={{
-          position: 'absolute', top: '8%', right: '5%', width: '200px', height: '200px', opacity: 0.035,
-        }}>
-          <g fill="none" stroke="#2c1810" strokeWidth="1">
-            <circle cx="100" cy="100" r="90" />
-            <circle cx="100" cy="100" r="80" />
-            <circle cx="100" cy="100" r="4" fill="#2c1810" />
-            {[0,45,90,135,180,225,270,315].map((angle) => (
-              <line key={angle} x1="100" y1="20" x2="100" y2="30"
-                transform={`rotate(${angle} 100 100)`} strokeWidth="1.5" />
-            ))}
-            <polygon points="100,12 104,85 100,75 96,85" fill="#2c1810" opacity="0.8" />
-            <polygon points="100,188 104,115 100,125 96,115" fill="#2c1810" opacity="0.4" />
-            <polygon points="12,100 85,96 75,100 85,104" fill="#2c1810" opacity="0.4" />
-            <polygon points="188,100 115,96 125,100 115,104" fill="#2c1810" opacity="0.4" />
-          </g>
-          {['N','E','S','W'].map((d, i) => (
-            <text key={d} x="100" y="100" fill="#2c1810" fontSize="8"
-              fontFamily="MedievalSharp" textAnchor="middle"
-              transform={`rotate(${i*90} 100 100) translate(0, -68)`}>
-              {d}
-            </text>
-          ))}
-        </svg>
+  useEffect(() => {
+    if (!containerRef.current) return;
 
-        {/* Self-drawing treasure map dotted path */}
-        <svg style={{
-          position: 'absolute', top: '15%', left: 0, width: '100%', height: '70%', opacity: 0.04,
-        }} viewBox="0 0 1200 800" fill="none">
-          <path className="map-path"
-            d="M 80 100 Q 200 50, 350 150 Q 500 250, 600 120 Q 700 10, 850 180 Q 950 300, 1100 200"
-            stroke="#5c3a1e" strokeWidth="2" strokeLinecap="round" strokeDasharray="6 10" />
-          <path className="map-path" style={{ animationDelay: '1s' }}
-            d="M 150 500 Q 300 400, 500 520 Q 650 600, 800 450 Q 900 350, 1050 500"
-            stroke="#5c3a1e" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="4 8" />
-        </svg>
+    // Dimensions
+    let width = window.innerWidth;
+    let height = window.innerHeight;
 
-        {/* Scattered X marks */}
-        {[
-          { top: '18%', left: '10%', size: 22, rot: 15 },
-          { top: '50%', left: '88%', size: 18, rot: -10 },
-          { top: '75%', left: '12%', size: 16, rot: 22 },
-          { top: '88%', left: '78%', size: 20, rot: -18 },
-          { top: '35%', left: '70%', size: 14, rot: 8 },
-        ].map((m, i) => (
-          <svg key={i} viewBox="0 0 30 30" style={{
-            position: 'absolute', top: m.top, left: m.left,
-            width: `${m.size}px`, height: `${m.size}px`, opacity: 0.06,
-            transform: `rotate(${m.rot}deg)`,
-          }}>
-            <line x1="5" y1="5" x2="25" y2="25" stroke="#8b1a1a" strokeWidth="3" strokeLinecap="round" />
-            <line x1="25" y1="5" x2="5" y2="25" stroke="#8b1a1a" strokeWidth="3" strokeLinecap="round" />
-          </svg>
-        ))}
+    // Scene
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x0b0a09, 0.008);
 
-        {/* Anchor bottom left */}
-        <svg viewBox="0 0 100 120" style={{
-          position: 'absolute', bottom: '6%', left: '3%', width: '80px', opacity: 0.03,
-        }}>
-          <g fill="none" stroke="#2c1810" strokeWidth="2.5" strokeLinecap="round">
-            <circle cx="50" cy="15" r="10" />
-            <line x1="50" y1="25" x2="50" y2="95" />
-            <line x1="30" y1="55" x2="70" y2="55" />
-            <path d="M 50 95 Q 50 105, 30 110" />
-            <path d="M 50 95 Q 50 105, 70 110" />
-          </g>
-        </svg>
+    // Camera
+    const camera = new THREE.PerspectiveCamera(60, width / height, 1, 1000);
+    camera.position.set(0, 50, 120);
+    camera.lookAt(0, 0, 0);
 
-        {/* Ship wheel bottom right */}
-        <svg viewBox="0 0 100 100" style={{
-          position: 'absolute', bottom: '10%', right: '4%', width: '90px', opacity: 0.025,
-          animation: 'compass-pulse 8s ease-in-out infinite',
-        }}>
-          <g fill="none" stroke="#2c1810" strokeWidth="2">
-            <circle cx="50" cy="50" r="30" />
-            <circle cx="50" cy="50" r="8" />
-            {[0,45,90,135,180,225,270,315].map((a) => (
-              <line key={a} x1="50" y1="50" x2="50" y2="15"
-                transform={`rotate(${a} 50 50)`} />
-            ))}
-          </g>
-        </svg>
-      </div>
-    </>
-  );
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    containerRef.current.appendChild(renderer.domElement);
+
+    // Generate circular soft glow texture dynamically
+    const createParticleTexture = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 32;
+      canvas.height = 32;
+      const ctx = canvas.getContext('2d');
+      const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+      gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+      gradient.addColorStop(0.3, 'rgba(255, 255, 255, 0.8)');
+      gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 32, 32);
+      return new THREE.CanvasTexture(canvas);
+    };
+
+    const particleTexture = createParticleTexture();
+
+    // Sand Dune Wave particles
+    const numParticlesX = 110;
+    const numParticlesY = 110;
+    const count = numParticlesX * numParticlesY;
+
+    const positions = new Float32Array(count * 3);
+    const colors = new Float32Array(count * 3);
+
+    // Color definitions
+    const colorGold = new THREE.Color(0xd4b48d); // #d4b48d
+    const colorTeal = new THREE.Color(0x7faea6); // #7faea6
+    const colorBg = new THREE.Color(0x13110f); // dark shadow tones
+
+    // Initialize positions and grid coordinates
+    let index = 0;
+    for (let x = 0; x < numParticlesX; x++) {
+      for (let y = 0; y < numParticlesY; y++) {
+        // Center the grid around origin
+        const px = (x - numParticlesX / 2) * 2.8;
+        const py = 0; // Starts flat, will wave in animation
+        const pz = (y - numParticlesY / 2) * 2.8;
+
+        positions[index * 3] = px;
+        positions[index * 3 + 1] = py;
+        positions[index * 3 + 2] = pz;
+
+        // Mix colors based on spatial distribution (diagonal blend)
+        const ratio = (x / numParticlesX + y / numParticlesY) / 2;
+        const mixedColor = new THREE.Color().copy(colorGold).lerp(colorTeal, ratio);
+
+        colors[index * 3] = mixedColor.r;
+        colors[index * 3 + 1] = mixedColor.g;
+        colors[index * 3 + 2] = mixedColor.b;
+
+        index++;
+      }
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    // Particle material
+    const material = new THREE.PointsMaterial({
+      size: 1.4,
+      vertexColors: true,
+      map: particleTexture,
+      transparent: true,
+      opacity: 0.65,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const points = new THREE.Points(geometry, material);
+    scene.add(points);
+
+    // Ambient Lighting (very soft)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.05);
+    scene.add(ambientLight);
+
+    // Mouse interaction parameters
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
+
+    const onMouseMove = (event) => {
+      mouseX = (event.clientX - width / 2) * 0.04;
+      mouseY = (event.clientY - height / 2) * 0.04;
+    };
+
+    window.addEventListener('mousemove', onMouseMove);
+
+    // Resize handler
+    const onWindowResize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+
+      renderer.setSize(width, height);
+    };
+
+    window.addEventListener('resize', onWindowResize);
+
+    // Animation Loop
+    let clock = new THREE.Clock();
+    let frameId;
+
+    const animate = () => {
+      frameId = requestAnimationFrame(animate);
+
+      const time = clock.getElapsedTime() * 0.4;
+      const posAttr = points.geometry.attributes.position;
+
+      // Update particle heights based on mathematical wave functions (Sand Dunes)
+      let idx = 0;
+      for (let x = 0; x < numParticlesX; x++) {
+        for (let y = 0; y < numParticlesY; y++) {
+          const px = posAttr.getX(idx);
+          const pz = posAttr.getZ(idx);
+
+          // Combination of sine and cosine waves at different frequencies to simulate natural sand ripples
+          const wave1 = Math.sin(px * 0.04 + time) * Math.cos(pz * 0.04 + time) * 6.5;
+          const wave2 = Math.sin(px * 0.08 - time * 0.5) * 2.2;
+          const wave3 = Math.cos(pz * 0.12 + time * 0.8) * 1.5;
+
+          const height = wave1 + wave2 + wave3;
+          posAttr.setY(idx, height);
+
+          idx++;
+        }
+      }
+      posAttr.needsUpdate = true;
+
+      // Smooth mouse follow parallax
+      targetX += (mouseX - targetX) * 0.05;
+      targetY += (mouseY - targetY) * 0.05;
+
+      points.rotation.y = targetX * 0.08;
+      points.rotation.x = 0.1 + targetY * 0.05;
+
+      // Rotate camera gently
+      camera.position.x = Math.sin(time * 0.08) * 20;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
+    };
+
+    animate();
+
+    // Clean up
+    return () => {
+      cancelAnimationFrame(frameId);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('resize', onWindowResize);
+      
+      if (containerRef.current && renderer.domElement) {
+        containerRef.current.removeChild(renderer.domElement);
+      }
+
+      geometry.dispose();
+      material.dispose();
+      particleTexture.dispose();
+      renderer.dispose();
+    };
+  }, []);
+
+  return <div ref={containerRef} className="webgl-container" aria-hidden="true" />;
 }

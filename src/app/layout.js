@@ -1,13 +1,13 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Aman Prasad — The Pirate's Parchment",
-  description: "Backend Developer & Competitive Programmer from Kolkata. Explore the treasure map of my projects, skills, and adventures in code.",
-  keywords: "Aman Prasad, Backend Developer, Competitive Programmer, Portfolio, Node.js, React, LeetCode",
+  title: "Aman Prasad — Backend Developer & Systems Engineer",
+  description: "Backend Developer and Systems Engineer from Kolkata. Focused on low-latency architectures, database optimization, and high-performance algorithms.",
+  keywords: "Aman Prasad, Backend Developer, SDE, Systems Engineer, Portfolio, Node.js, TypeScript, React, LeetCode, Redis, Kafka, Kolkata",
   authors: [{ name: "Aman Prasad" }],
   openGraph: {
-    title: "Aman Prasad — The Pirate's Parchment",
-    description: "Backend Developer & Competitive Programmer. Explore the treasure map of my projects and skills.",
+    title: "Aman Prasad — Backend Developer & Systems Engineer",
+    description: "Backend Developer and Systems Engineer. Explore my projects, technical skills, and battle record.",
     type: "website",
   },
 };

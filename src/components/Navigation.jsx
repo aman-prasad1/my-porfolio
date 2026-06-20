@@ -8,7 +8,7 @@ export default function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 40);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -21,65 +21,72 @@ export default function Navigation() {
       return;
     }
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (el) {
+      // Offset for floating navbar
+      const yOffset = -80;
+      const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
   };
 
   const navItems = [
-    { label: '⚓ Home', id: 'top', dir: 'N' },
-    { label: '🗺️ Voyages', id: 'voyages-section', dir: 'E' },
-    { label: '⚔️ Arsenal', id: 'arsenal-section', dir: 'S' },
-    { label: '📜 Contact', id: 'contact-section', dir: 'W' },
+    { label: 'Home', id: 'top' },
+    { label: 'Projects', id: 'voyages-section' },
+    { label: 'Skills', id: 'arsenal-section' },
+    { label: 'Contact', id: 'contact-section' },
   ];
 
   return (
     <nav style={{
       position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
+      top: '1.25rem',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      width: 'calc(100% - 2.5rem)',
+      maxWidth: '1100px',
       zIndex: 100,
-      transition: 'all 0.4s ease',
-      background: scrolled
-        ? 'linear-gradient(180deg, rgba(196,167,125,0.95) 0%, rgba(220,197,160,0.92) 100%)'
-        : 'transparent',
-      backdropFilter: scrolled ? 'blur(8px)' : 'none',
-      borderBottom: scrolled ? '2px solid rgba(139,105,20,0.3)' : '2px solid transparent',
-      boxShadow: scrolled ? '0 2px 12px rgba(44,24,16,0.1)' : 'none',
+      transition: 'var(--transition-smooth)',
+      background: scrolled ? 'rgba(15, 14, 13, 0.7)' : 'rgba(15, 14, 13, 0.4)',
+      backdropFilter: 'blur(20px)',
+      WebkitBackdropFilter: 'blur(20px)',
+      border: scrolled ? '1px solid rgba(212, 180, 141, 0.22)' : '1px solid rgba(255, 255, 255, 0.06)',
+      boxShadow: scrolled ? '0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 180, 141, 0.03)' : '0 4px 20px rgba(0, 0, 0, 0.2)',
+      borderRadius: '16px',
     }}>
       <div style={{
-        maxWidth: '1200px',
-        margin: '0 auto',
         padding: '0 1.5rem',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         height: '64px',
       }}>
-        {/* Logo */}
+        {/* Brand Logo */}
         <button
           onClick={() => scrollTo('top')}
           style={{
             background: 'none',
             border: 'none',
             cursor: 'pointer',
-            fontFamily: 'var(--font-display)',
-            fontSize: '1.6rem',
-            color: 'var(--ink-dark)',
+            fontFamily: 'var(--font-heading)',
+            fontSize: '1.35rem',
+            fontWeight: '700',
+            color: 'var(--text-primary)',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.5rem',
-            transition: 'color 0.3s ease',
+            gap: '0.2rem',
+            transition: 'var(--transition-smooth)',
+            letterSpacing: '-0.02em',
           }}
         >
-          <span style={{ fontSize: '1.3rem' }}>☠️</span>
-          <span>A.P.</span>
+          <span>AMAN</span>
+          <span style={{ color: 'var(--accent-gold)' }}>.P</span>
         </button>
 
-        {/* Desktop Nav */}
+        {/* Desktop Nav Items */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '0.5rem',
+          gap: '0.75rem',
         }}
         className="nav-desktop"
         >
@@ -92,20 +99,20 @@ export default function Navigation() {
                 border: 'none',
                 cursor: 'pointer',
                 fontFamily: 'var(--font-heading)',
-                fontSize: '0.95rem',
-                color: 'var(--ink-brown)',
-                padding: '0.5rem 1rem',
-                borderRadius: '4px',
-                transition: 'all 0.3s ease',
-                position: 'relative',
+                fontSize: '0.92rem',
+                fontWeight: '500',
+                color: 'var(--text-secondary)',
+                padding: '0.5rem 0.95rem',
+                borderRadius: '8px',
+                transition: 'var(--transition-smooth)',
               }}
               onMouseEnter={(e) => {
-                e.target.style.color = 'var(--ink-dark)';
-                e.target.style.background = 'rgba(139,105,20,0.1)';
+                e.currentTarget.style.color = 'var(--text-primary)';
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
               }}
               onMouseLeave={(e) => {
-                e.target.style.color = 'var(--ink-brown)';
-                e.target.style.background = 'none';
+                e.currentTarget.style.color = 'var(--text-secondary)';
+                e.currentTarget.style.background = 'none';
               }}
             >
               {item.label}
@@ -114,13 +121,19 @@ export default function Navigation() {
           <a
             href="/Aman_Prasad_Resume.pdf"
             download
-            className="nav-resume-btn"
+            className="btn-premium"
+            style={{ 
+              padding: '0.45rem 1.15rem', 
+              fontSize: '0.85rem', 
+              borderRadius: '8px',
+              marginLeft: '0.5rem' 
+            }}
           >
-            📥 Resume
+            Resume
           </a>
         </div>
 
-        {/* Mobile Hamburger */}
+        {/* Mobile Hamburger Toggle */}
         <button
           className="nav-mobile-btn"
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -130,37 +143,41 @@ export default function Navigation() {
             cursor: 'pointer',
             padding: '0.5rem',
             display: 'none',
+            color: 'var(--text-primary)',
           }}
           aria-label="Toggle navigation"
         >
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--ink-dark)" strokeWidth="2" strokeLinecap="round">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             {mobileOpen ? (
               <>
-                <line x1="4" y1="4" x2="20" y2="20" />
-                <line x1="20" y1="4" x2="4" y2="20" />
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
               </>
             ) : (
               <>
-                <line x1="3" y1="6" x2="21" y2="6" />
-                <line x1="3" y1="12" x2="21" y2="12" />
-                <line x1="3" y1="18" x2="21" y2="18" />
+                <line x1="4" y1="6" x2="20" y2="6" />
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <line x1="4" y1="18" x2="20" y2="18" />
               </>
             )}
           </svg>
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Drawer Menu */}
       {mobileOpen && (
         <div
           className="nav-mobile-menu"
           style={{
-            background: 'linear-gradient(180deg, rgba(220,197,160,0.98) 0%, rgba(244,232,193,0.98) 100%)',
-            borderTop: '1px solid rgba(139,105,20,0.2)',
-            padding: '1rem 1.5rem',
+            background: 'rgba(15, 14, 13, 0.95)',
+            borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+            padding: '1.25rem 1.5rem',
             display: 'flex',
             flexDirection: 'column',
-            gap: '0.25rem',
+            gap: '0.5rem',
+            borderBottomLeftRadius: '16px',
+            borderBottomRightRadius: '16px',
+            backdropFilter: 'blur(20px)',
           }}
         >
           {navItems.map((item) => (
@@ -172,51 +189,43 @@ export default function Navigation() {
                 border: 'none',
                 cursor: 'pointer',
                 fontFamily: 'var(--font-heading)',
-                fontSize: '1.1rem',
-                color: 'var(--ink-brown)',
+                fontSize: '1.05rem',
+                fontWeight: '500',
+                color: 'var(--text-secondary)',
                 padding: '0.75rem 1rem',
                 textAlign: 'left',
-                borderRadius: '4px',
-                transition: 'all 0.3s ease',
+                borderRadius: '8px',
+                transition: 'var(--transition-smooth)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = 'var(--text-primary)';
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = 'var(--text-secondary)';
+                e.currentTarget.style.background = 'none';
               }}
             >
               {item.label}
             </button>
           ))}
           <a
-            href="/Resume.pdf"
+            href="/Aman_Prasad_Resume.pdf"
             download
-            className="nav-resume-btn"
-            style={{ marginTop: '0.5rem' }}
+            className="btn-premium"
+            style={{ 
+              marginTop: '0.75rem', 
+              textAlign: 'center', 
+              justifyContent: 'center',
+              borderRadius: '8px'
+            }}
           >
-            📥 Download Resume
+            Download Resume
           </a>
         </div>
       )}
 
       <style jsx>{`
-        .nav-resume-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.4rem;
-          padding: 0.45rem 1.1rem;
-          font-family: var(--font-heading);
-          font-size: 0.88rem;
-          color: var(--parchment-light);
-          background: radial-gradient(circle at 30% 30%, #a03030, #6b2020 60%, #4a1010);
-          border: none;
-          border-radius: 50px;
-          cursor: pointer;
-          text-decoration: none;
-          box-shadow: 0 2px 8px rgba(107,32,32,0.35), inset 0 1px 2px rgba(255,255,255,0.15);
-          transition: all 0.3s ease;
-          white-space: nowrap;
-        }
-        .nav-resume-btn:hover {
-          transform: scale(1.06) translateY(-1px);
-          box-shadow: 0 4px 14px rgba(107,32,32,0.45), inset 0 1px 2px rgba(255,255,255,0.2);
-          color: #fff;
-        }
         @media (min-width: 769px) {
           .nav-mobile-btn { display: none !important; }
           .nav-desktop { display: flex !important; }
@@ -224,12 +233,6 @@ export default function Navigation() {
         @media (max-width: 768px) {
           .nav-mobile-btn { display: block !important; }
           .nav-desktop { display: none !important; }
-          .nav-resume-btn {
-            text-align: center;
-            justify-content: center;
-            padding: 0.65rem 1.5rem;
-            font-size: 1rem;
-          }
         }
       `}</style>
     </nav>

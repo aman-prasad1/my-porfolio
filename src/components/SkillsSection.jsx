@@ -1,123 +1,126 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-
 export default function SkillsSection() {
   const skillCategories = [
     {
-      title: "⚓ Backend Mastery",
+      title: "Backend Engineering",
+      icon: "⚙️",
       skills: [
-        { name: "Node.js", desc: "Server-side JavaScript" },
-        { name: "Express.js", desc: "Fast web framework" },
-        { name: "TypeScript", desc: "Type-safe development" },
-        { name: "Kafka", desc: "Event streaming" },
+        { name: "Node.js", desc: "Event-driven asynchronous backend systems" },
+        { name: "Express.js", desc: "RESTful API services and middlewares" },
+        { name: "TypeScript", desc: "Type-safe robust application coding" },
+        { name: "Kafka", desc: "Distributed event streaming & messaging" },
       ]
     },
     {
-      title: "🗄️ Databases & Cache",
+      title: "Databases & Caching",
+      icon: "🗄️",
       skills: [
-        { name: "PostgreSQL", desc: "Relational database" },
-        { name: "MongoDB", desc: "NoSQL document DB" },
-        { name: "Redis", desc: "In-memory data store" },
+        { name: "PostgreSQL", desc: "Relational database schema and queries" },
+        { name: "MongoDB", desc: "NoSQL document storage & aggregation" },
+        { name: "Redis", desc: "High-speed caching & session management" },
       ]
     },
     {
-      title: "🌊 Frontend & Cloud",
+      title: "Frontend & Cloud",
+      icon: "☁️",
       skills: [
-        { name: "React", desc: "Interactive UIs" },
-        { name: "Next.js", desc: "Full-stack framework" },
-        { name: "Docker", desc: "Containerization" },
-        { name: "AWS", desc: "Cloud infrastructure" },
+        { name: "React", desc: "Component-driven user interfaces" },
+        { name: "Next.js", desc: "Server-side rendering & fullstack routing" },
+        { name: "Docker", desc: "Containerization & microservice isolation" },
+        { name: "AWS", desc: "EC2, S3 & server infrastructure" },
       ]
     },
     {
-      title: "⚔️ Languages",
+      title: "Programming Languages",
+      icon: "💻",
       skills: [
-        { name: "JavaScript", desc: "Web & server" },
-        { name: "Python", desc: "Scripting & ML" },
-        { name: "C++", desc: "Competitive programming" },
-        { name: "Java", desc: "Enterprise apps" },
-        { name: "C", desc: "System programming" },
+        { name: "C++", desc: "Algorithms and structures (STL)" },
+        { name: "JavaScript", desc: "Core JS (ES6+) and asynchronous loop" },
+        { name: "Python", desc: "Scripting, automations & data analysis" },
+        { name: "Java & C", desc: "Object-oriented and system-level code" },
       ]
     },
   ];
 
-  const rots = [1.5, -1.8, 2, -1.2];
-  const cardsRef = useRef([]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('card-enter');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    cardsRef.current.forEach((el) => { if (el) observer.observe(el); });
-    return () => observer.disconnect();
-  }, []);
+  const stats = [
+    { label: 'Problems Solved', value: '1000+', icon: '⚔️' },
+    { label: 'Peak LeetCode Rating', value: '1707', icon: '📊' },
+    { label: 'Global Rank', value: 'Top 13.06%', icon: '🌍' },
+    { label: 'Coding Streak', value: '500+ Days', icon: '🔥' },
+  ];
 
   return (
-    <section id="arsenal-section" style={{
-      position: 'relative', zIndex: 1,
-      padding: '4rem 2rem', maxWidth: '1100px', margin: '0 auto',
-    }}>
-      <div className="ink-divider">
-        <span className="ink-divider-icon">⚔️</span>
-      </div>
-
+    <section id="arsenal-section" className="section-wrapper">
+      {/* Section Header */}
       <div className="section-header">
-        <h2 className="section-title">The Arsenal</h2>
+        <h2 className="section-title">Technical Expertise</h2>
         <p className="section-subtitle">
-          Torn notes from the captain&apos;s quarters — every weapon catalogued and battle-tested.
+          A collection of backend-focused tooling, database ecosystems, and infrastructure environments I work with.
         </p>
       </div>
 
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-        gap: '2.5rem',
-        padding: '0.5rem',
-        marginBottom: '3rem',
-      }}>
-        {skillCategories.map((cat, ci) => (
-          <div
-            key={cat.title}
-            ref={(el) => { cardsRef.current[ci] = el; }}
-            className={ci % 2 === 0 ? 'torn-paper' : 'torn-paper-v2'}
-            style={{
-              '--rot': `${rots[ci]}deg`,
-              transform: `rotate(${rots[ci]}deg)`,
-              opacity: 0,
-              position: 'relative',
-              animationDelay: `${ci * 130}ms`,
-            }}
-          >
-            {ci % 2 === 0 ? (
-              <div className="tape-strip" style={{ transform: `translateX(-50%) rotate(${ci % 3 - 1}deg)` }} />
-            ) : (
-              <div className="paper-pin" />
-            )}
-
+      {/* Bento Grid: 4 categories of skills */}
+      <div className="bento-grid" style={{ marginBottom: '4rem' }}>
+        {skillCategories.map((cat) => (
+          <div key={cat.title} className="bento-col-6 glass-card" style={{
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+            {/* Category Title */}
             <h3 style={{
-              fontFamily: 'var(--font-heading)', fontSize: '1.15rem',
-              color: 'var(--ink-dark)', marginBottom: '1rem',
-              paddingBottom: '0.6rem', borderBottom: '1px dashed var(--parchment-dark)',
-              textAlign: 'center', marginTop: ci % 2 === 0 ? '0.4rem' : '0',
+              fontSize: '1.2rem',
+              fontWeight: '700',
+              marginBottom: '1.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.65rem',
+              fontFamily: 'var(--font-heading)',
+              borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+              paddingBottom: '0.75rem',
+              color: 'var(--text-primary)',
             }}>
-              {cat.title}
+              <span>{cat.icon}</span>
+              <span>{cat.title}</span>
             </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+
+            {/* Skills List */}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1.1rem',
+            }}>
               {cat.skills.map((skill) => (
-                <div key={skill.name} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
-                  <span style={{ color: 'var(--ink-gold)', fontSize: '0.8rem', marginTop: '3px' }}>✦</span>
+                <div key={skill.name} style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '0.75rem',
+                }}>
+                  <span style={{
+                    color: 'var(--accent-gold)',
+                    fontSize: '0.9rem',
+                    lineHeight: '1.2',
+                    marginTop: '2px',
+                  }}>
+                    ✦
+                  </span>
                   <div>
-                    <span style={{
-                      fontFamily: 'var(--font-heading)', fontSize: '0.95rem', color: 'var(--ink-dark)',
-                    }}>{skill.name}</span>
-                    <p style={{ fontSize: '0.75rem', color: 'var(--ink-light)', marginTop: '1px' }}>{skill.desc}</p>
+                    <h4 style={{
+                      fontSize: '0.96rem',
+                      fontWeight: '600',
+                      color: 'var(--text-primary)',
+                      marginBottom: '0.15rem',
+                      fontFamily: 'var(--font-body)',
+                    }}>
+                      {skill.name}
+                    </h4>
+                    <p style={{
+                      fontSize: '0.82rem',
+                      color: 'var(--text-secondary)',
+                      lineHeight: '1.4',
+                    }}>
+                      {skill.desc}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -126,48 +129,91 @@ export default function SkillsSection() {
         ))}
       </div>
 
-      {/* Battle Record — Bounty Board */}
-      <div className="bounty-board" style={{ maxWidth: '650px', margin: '0 auto' }}>
+      {/* Bottom Dashboard: LeetCode Battle Record */}
+      <div className="glass-card" style={{
+        maxWidth: '850px',
+        margin: '0 auto',
+        border: '1px solid rgba(212, 180, 141, 0.25)',
+        background: 'linear-gradient(135deg, rgba(20, 18, 16, 0.5) 0%, rgba(212, 180, 141, 0.02) 100%)',
+        boxShadow: '0 20px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 180, 141, 0.02)',
+      }}>
+        {/* Title */}
         <div style={{
-          fontFamily: 'var(--font-display)', fontSize: '1.8rem',
-          color: 'var(--blood-red)', letterSpacing: '3px',
-          marginBottom: '0.3rem',
+          textAlign: 'center',
+          marginBottom: '2rem',
         }}>
-          ☠ Battle Record ☠
+          <h3 style={{
+            fontSize: '1.4rem',
+            fontWeight: '700',
+            fontFamily: 'var(--font-heading)',
+            color: 'var(--accent-gold)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+            marginBottom: '0.4rem',
+          }}>
+            LeetCode Battle Record
+          </h3>
+          <p style={{
+            fontSize: '0.9rem',
+            color: 'var(--text-secondary)',
+          }}>
+            Consistency over intensity. Solving challenges and optimizing runtime algorithms.
+          </p>
         </div>
-        <p style={{
-          fontFamily: 'var(--font-body)', fontStyle: 'italic',
-          color: 'var(--ink-brown)', marginBottom: '1.5rem', fontSize: '0.92rem',
-        }}>
-          Consistency over intensity. Every day, without exception.
-        </p>
 
-        <div style={{
-          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '1rem',
-        }}>
-          {[
-            { label: 'Problems Solved', value: '1000+', icon: '⚔️' },
-            { label: 'Peak Rating', value: '1681', icon: '📊' },
-            { label: 'Global Rank', value: 'Top 14.97%', icon: '🌍' },
-            { label: 'Day Streak', value: '500+', icon: '🔥' },
-          ].map((stat) => (
-            <div key={stat.label} className="stat-cell">
-              <div style={{ fontSize: '1.4rem', marginBottom: '0.25rem' }}>{stat.icon}</div>
+        {/* Stats Grid */}
+        <div className="bento-grid" style={{ gap: '1rem' }}>
+          {stats.map((stat) => (
+            <div key={stat.label} className="bento-col-3" style={{
+              background: 'rgba(255, 255, 255, 0.02)',
+              border: '1px solid rgba(255, 255, 255, 0.05)',
+              borderRadius: '12px',
+              padding: '1.25rem 0.75rem',
+              textAlign: 'center',
+              transition: 'var(--transition-smooth)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = 'rgba(212, 180, 141, 0.3)';
+              e.currentTarget.style.background = 'rgba(212, 180, 141, 0.04)';
+              e.currentTarget.style.transform = 'translateY(-3px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
+              e.currentTarget.style.transform = 'none';
+            }}
+            >
+              <div style={{ fontSize: '1.6rem', marginBottom: '0.4rem' }}>{stat.icon}</div>
               <div style={{
-                fontFamily: 'var(--font-display)', fontSize: '1.4rem', color: 'var(--ink-dark)',
+                fontSize: '1.6rem',
+                fontWeight: '700',
+                fontFamily: 'var(--font-heading)',
+                color: 'var(--text-primary)',
+                lineHeight: '1.1',
               }}>{stat.value}</div>
               <div style={{
-                fontFamily: 'var(--font-body)', fontSize: '0.72rem',
-                color: 'var(--ink-light)', marginTop: '0.15rem',
+                fontSize: '0.75rem',
+                color: 'var(--text-secondary)',
+                marginTop: '0.35rem',
+                fontWeight: '500',
+                textTransform: 'uppercase',
+                letterSpacing: '0.04em',
               }}>{stat.label}</div>
             </div>
           ))}
         </div>
 
-        <div style={{ marginTop: '1.25rem', display: 'flex', justifyContent: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-          <span className="ink-stamp" style={{ borderColor: 'var(--ink-gold)', color: 'var(--ink-gold)' }}>LeetCode</span>
-          <span className="ink-stamp" style={{ borderColor: 'var(--blood-red)', color: 'var(--blood-red)' }}>DSA Expert</span>
-          <span className="ink-stamp" style={{ borderColor: 'var(--ink-brown)', color: 'var(--ink-brown)' }}>C++ Specialist</span>
+        {/* Custom Stamps */}
+        <div style={{
+          marginTop: '2rem',
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '0.5rem',
+          flexWrap: 'wrap',
+        }}>
+          <span className="tech-chip" style={{ color: 'var(--accent-gold)', borderColor: 'rgba(212, 180, 141, 0.25)' }}>LeetCode Active</span>
+          <span className="tech-chip" style={{ color: 'var(--accent-teal)', borderColor: 'rgba(127, 174, 166, 0.25)' }}>DSA Specialist</span>
+          <span className="tech-chip">C++ STL</span>
         </div>
       </div>
     </section>
