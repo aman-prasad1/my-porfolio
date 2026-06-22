@@ -77,14 +77,10 @@ export default function SocialSection() {
         ))}
       </div>
 
-      {/* Collaboration / Recruitment Panel */}
-      <div className="glass-card" style={{ 
+      <div className="glass-card-teal" style={{ 
         maxWidth: '650px', 
         margin: '0 auto 5rem',
         textAlign: 'center',
-        border: '1px solid rgba(127, 174, 166, 0.25)',
-        background: 'linear-gradient(135deg, rgba(20, 18, 16, 0.5) 0%, rgba(127, 174, 166, 0.02) 100%)',
-        boxShadow: '0 20px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(127, 174, 166, 0.02)',
       }}>
         <h3 style={{
           fontSize: '1.4rem',

@@ -170,17 +170,7 @@ export default function HeroSection() {
           display: 'flex',
           justifyContent: 'center',
         }}>
-          <div className="portrait-container" style={{
-            position: 'relative',
-            width: '100%',
-            maxWidth: '340px',
-            aspectRatio: '1',
-            borderRadius: '24px',
-            padding: '8px',
-            background: 'linear-gradient(135deg, rgba(212,180,141,0.2) 0%, rgba(127,174,166,0.1) 100%)',
-            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255,255,255,0.05)',
-            transition: 'var(--transition-smooth)',
-          }}>
+          <div className="portrait-container">
             <div style={{
               width: '100%',
               height: '100%',
@@ -209,7 +199,7 @@ export default function HeroSection() {
               position: 'absolute',
               inset: '-10px',
               borderRadius: '34px',
-              background: 'radial-gradient(circle, rgba(212,180,141,0.18) 0%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(212, 180, 141, 0.18) 0%, transparent 70%)',
               zIndex: -1,
               pointerEvents: 'none',
               transition: 'var(--transition-smooth)',
@@ -220,13 +210,6 @@ export default function HeroSection() {
       </div>
 
       <style jsx>{`
-        .portrait-container:hover {
-          transform: translateY(-8px) scale(1.02);
-          background: linear-gradient(135deg, rgba(212,180,141,0.35) 0%, rgba(127,174,166,0.2) 100%);
-          box-shadow: 
-            0 30px 60px rgba(0, 0, 0, 0.65), 
-            0 0 30px rgba(212, 180, 141, 0.15);
-        }
         .portrait-container:hover .profile-img {
           transform: scale(1.04);
         }
