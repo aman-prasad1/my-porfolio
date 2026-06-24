@@ -79,7 +79,7 @@ export default function Navigation() {
           }}
         >
           <span>AMAN</span>
-          <span style={{ color: 'var(--accent-gold)' }}>.P</span>
+          <span style={{ color: 'var(--accent-gold)' }}>PRASAD</span>
         </button>
 
         {/* Desktop Nav Items */}
