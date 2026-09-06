@@ -44,10 +44,10 @@ export default function SkillsSection() {
   ];
 
   const stats = [
-    { label: 'Problems Solved', value: '1000+', icon: '⚔️' },
-    { label: 'Peak LeetCode Rating', value: '1707', icon: '📊' },
-    { label: 'Global Rank', value: 'Top 13.06%', icon: '🌍' },
-    { label: 'Coding Streak', value: '500+ Days', icon: '🔥' },
+    { label: 'Problems Solved', value: '1100+', icon: '⚔️' },
+    { label: 'Peak LeetCode Rating', value: '1733', icon: '📊' },
+    { label: 'Global Rank', value: 'Top 11.00%', icon: '🌍' },
+    { label: 'Coding Streak', value: '1000+ Days', icon: '🔥' },
   ];
 
   return (

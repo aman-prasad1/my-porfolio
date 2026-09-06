@@ -19,10 +19,10 @@ export const projectsData = [
   },
   {
     id: 3,
-    title: "Video-Compressor",
-    description: "Web app for compressing video files without losing quality. Leverages FFmpeg for media processing.",
-    technologies: ["React", "FFmpeg", "Express", "CSS3"],
-    githubUrl: "https://github.com/aman-prasad1/Video-Compressor",
+    title: "Documind",
+    description: "AI-powered document Q&A platform using RAG. Upload PDFs, DOCX, or text files and have intelligent conversations about their content powered by Gemini and ChromaDB.",
+    technologies: ["FastAPI", "React", "Gemini", "ChromaDB", "RAG", "Python"],
+    githubUrl: "https://github.com/aman-prasad1/documind",
     liveUrl: "",
     status: "completed"
   },
