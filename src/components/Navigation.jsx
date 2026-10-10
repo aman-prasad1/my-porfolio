@@ -120,7 +120,8 @@ export default function Navigation() {
           ))}
           <a
             href="/Aman_Prasad_Resume.pdf"
-            download
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn-premium"
             style={{ 
               padding: '0.45rem 1.15rem', 
@@ -211,7 +212,8 @@ export default function Navigation() {
           ))}
           <a
             href="/Aman_Prasad_Resume.pdf"
-            download
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn-premium"
             style={{ 
               marginTop: '0.75rem', 
@@ -220,7 +222,7 @@ export default function Navigation() {
               borderRadius: '8px'
             }}
           >
-            Download Resume
+            View Resume
           </a>
         </div>
       )}

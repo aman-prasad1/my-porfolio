@@ -150,7 +150,8 @@ export default function HeroSection() {
             </button>
             <a
               href="/Aman_Prasad_Resume.pdf"
-              download
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-premium-secondary"
               style={{ 
                 minWidth: '150px', 
@@ -159,7 +160,7 @@ export default function HeroSection() {
                 background: 'rgba(212, 180, 141, 0.03)'
               }}
             >
-              Download CV
+              View CV
             </a>
           </div>
         </div>
